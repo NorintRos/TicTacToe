@@ -13,6 +13,9 @@ class GameBoard {
     private boolean gameOver;
     private boolean playWithBot;
     private TicTacToeGameLogic gameLogic;
+    private JButton backtrackButton;
+    private int lastRow = -1;
+    private int lastCol = -1;
 
     public GameBoard(JFrame frame, GameMode gameMode, JPanel mainMenuPanel) {
         this.frame = frame;
@@ -45,6 +48,11 @@ class GameBoard {
         buttons = new JButton[3][3];
         currentPlayer = Player.X;
         gameOver = false;
+
+        backtrackButton = new JButton("Backtrack");
+        backtrackButton.setFont(new Font("Arial", Font.BOLD, 30));
+        backtrackButton.addActionListener(e -> backtrack());
+        gamePanel.add(backtrackButton, BorderLayout.NORTH);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -79,6 +87,8 @@ class GameBoard {
         if (!gameOver && button.getText().isEmpty()) {
             button.setText(currentPlayer.toString());
             gameLogic.makeMove(row, col, currentPlayer);
+            lastRow = row;
+            lastCol = col;
             checkWinner();
             if (!gameOver) {
                 switchPlayer();
@@ -88,7 +98,15 @@ class GameBoard {
             }
         }
     }
-
+    private void backtrack() {
+        if (lastRow != -1 && lastCol != -1) {
+            buttons[lastRow][lastCol].setText("");
+            gameLogic.undoLastMove(lastRow, lastCol);
+            switchPlayer();
+            lastRow = -1;
+            lastCol = -1;
+        }
+    }
 
     private ImageIcon resizeIcon(ImageIcon icon, int width, int height) {
         Image img = icon.getImage();

@@ -14,6 +14,11 @@ class TicTacToeGameLogic {
             board[row][col] = player;
         }
     }
+    public void undoLastMove(int row, int col) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE) {
+            board[row][col] = null;
+        }
+    }
 
 
     public Player checkWinner() {
