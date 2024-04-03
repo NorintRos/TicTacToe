@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+
 
 public class TicTacToe {
     private JFrame frame;
@@ -28,11 +27,11 @@ public class TicTacToe {
 
         playWithFriendButton = new JButton("Play with Friend");
         playWithFriendButton.setFont(new Font("Arial", Font.BOLD, 30));
-        playWithFriendButton.addActionListener(e -> startGame(false));
+        playWithFriendButton.addActionListener(e -> startGame(GameMode.FRIEND));
 
         playWithBotButton = new JButton("Play with Bot");
         playWithBotButton.setFont(new Font("Arial", Font.BOLD, 30));
-        playWithBotButton.addActionListener(e -> startGame(true));
+        playWithBotButton.addActionListener(e -> startGame(GameMode.BOT));
 
         mainMenuPanel.add(playWithFriendButton, gbc);
         mainMenuPanel.add(playWithBotButton, gbc);
@@ -40,10 +39,11 @@ public class TicTacToe {
         frame.setVisible(true);
     }
 
-    private void startGame(boolean playWithBot) {
-        GameBoard gameBoard = new GameBoard(frame, playWithBot, mainMenuPanel);
+    private void startGame(GameMode gameMode) {
+        GameBoard gameBoard = new GameBoard(frame, gameMode, mainMenuPanel);
         gameBoard.showGameBoard();
     }
+
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new TicTacToe());

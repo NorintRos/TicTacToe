@@ -10,10 +10,11 @@ class TicTacToeGameLogic {
     }
 
     public void makeMove(int row, int col, Player player) {
-        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE) {
+        if (row >= 0 && row < SIZE && col >= 0 && col < SIZE && board[row][col] == null) {
             board[row][col] = player;
         }
     }
+
 
     public Player checkWinner() {
         for (int i = 0; i < SIZE; i++) {
@@ -32,6 +33,7 @@ class TicTacToeGameLogic {
         }
         return null;
     }
+
 
     public boolean isBoardFull() {
         for (int i = 0; i < SIZE; i++) {

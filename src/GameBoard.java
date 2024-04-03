@@ -15,13 +15,14 @@ class GameBoard {
     private TicTacToeGameLogic gameLogic;
     private Timer resetTimer;
 
-    public GameBoard(JFrame frame, boolean playWithBot, JPanel mainMenuPanel) {
+    public GameBoard(JFrame frame, GameMode gameMode, JPanel mainMenuPanel) {
         this.frame = frame;
-        this.playWithBot = playWithBot;
+        this.playWithBot = (gameMode == GameMode.BOT);
         this.mainMenuPanel = mainMenuPanel;
         this.gameLogic = new TicTacToeGameLogic();
         initializeGameBoard();
     }
+
 
     private void initializeGameBoard() {
         gamePanel = new JPanel();
@@ -97,8 +98,9 @@ class GameBoard {
 
     private void switchPlayer() {
         currentPlayer = currentPlayer.next();
-        currentPlayerLabel.setText("Player " + currentPlayer + "'s Turn");
+        currentPlayerLabel.setText(currentPlayer.getDisplayName() + "'s Turn");
     }
+
 
     private void checkWinner() {
         Player winner = gameLogic.checkWinner();
