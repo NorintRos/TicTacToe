@@ -13,7 +13,6 @@ class GameBoard {
     private boolean gameOver;
     private boolean playWithBot;
     private TicTacToeGameLogic gameLogic;
-    private Timer resetTimer;
 
     public GameBoard(JFrame frame, GameMode gameMode, JPanel mainMenuPanel) {
         this.frame = frame;
@@ -118,13 +117,9 @@ class GameBoard {
 
             // Highlight the winning line
             highlightWinningLine(gameLogic.getWinningLine());
-
-            // Start the reset timer
-            startResetTimer();
         } else if (gameLogic.isBoardFull()) {
             gameOver = true;
             currentPlayerLabel.setText("It's a tie!");
-            startResetTimer();
         }
     }
 
@@ -137,32 +132,19 @@ class GameBoard {
             }
         }
     }
-    private void startResetTimer() {
-        if (resetTimer != null) {
-            resetTimer.stop();
-        }
-
-        resetTimer = new Timer(2000, e -> resetGame());
-        resetTimer.setRepeats(false);
-        resetTimer.start();
-    }
 
     private void resetGame() {
-        if (resetTimer != null) {
-            resetTimer.stop();
-        }
         gameLogic.resetBoard();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 buttons[i][j].setText("");
-                buttons[i][j].setBackground(null); // Remove the highlight
+                buttons[i][j].setBackground(null);
             }
         }
         currentPlayer = Player.X;
         gameOver = false;
         currentPlayerLabel.setText("Player X's Turn");
     }
-
 
     private void makeBotMove() {
         if (gameOver || !playWithBot) {
