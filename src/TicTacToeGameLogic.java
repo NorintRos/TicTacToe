@@ -33,7 +33,27 @@ class TicTacToeGameLogic {
         }
         return null;
     }
-
+    public int[][] getWinningLine() {
+        for (int i = 0; i < SIZE; i++) {
+            // Check rows
+            if (board[i][0] != null && board[i][0] == board[i][1] && board[i][1] == board[i][2]) {
+                return new int[][]{{i, 0}, {i, 1}, {i, 2}};
+            }
+            // Check columns
+            if (board[0][i] != null && board[0][i] == board[1][i] && board[1][i] == board[2][i]) {
+                return new int[][]{{0, i}, {1, i}, {2, i}};
+            }
+        }
+        // Check diagonals
+        if (board[0][0] != null && board[0][0] == board[1][1] && board[1][1] == board[2][2]) {
+            return new int[][]{{0, 0}, {1, 1}, {2, 2}};
+        }
+        if (board[0][2] != null && board[0][2] == board[1][1] && board[1][1] == board[2][0]) {
+            return new int[][]{{0, 2}, {1, 1}, {2, 0}};
+        }
+        // No winner
+        return null;
+    }
 
     public boolean isBoardFull() {
         for (int i = 0; i < SIZE; i++) {
